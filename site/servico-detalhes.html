@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviço - CelularTech</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .servico-header {
+            background: linear-gradient(135deg, #3B82F6, #1E40AF);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .servico-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .servico-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .tecnicos-container {
+            padding: 2rem 0;
+        }
+
+        .tecnicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tecnico-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tecnico-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .tecnico-foto {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .tecnico-info {
+            padding: 1.5rem;
+        }
+
+        .tecnico-nome {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1F2937;
+        }
+
+        .tecnico-cidade {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tecnico-avaliacao {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .stars {
+            color: #FCD34D;
+            font-size: 1.1rem;
+        }
+
+        .tecnico-preco {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3B82F6;
+            margin-bottom: 1rem;
+        }
+
+        .tecnico-servicos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .servico-tag {
+            background: #DBEAFE;
+            color: #1E40AF;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .btn-solicitar {
+            width: 100%;
+            padding: 0.8rem;
+            background: #10B981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-solicitar:hover {
+            background: #059669;
+        }
+
+        .btn-voltar {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: #E5E7EB;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: #D1D5DB;
+        }
+
+        @media (max-width: 768px) {
+            .servico-header h1 {
+                font-size: 1.8rem;
+            }
+            .tecnicos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="servicos.html">Serviços</a>
+                <a href="pages/login.html">Entrar</a>
+                <a href="pages/cadastro.html" class="btn-primary">Cadastrar</a>
+            </div>
+        </nav>
+    </section>
+
+    <div class="container tecnicos-container">
+        <a href="servicos.html" class="btn-voltar">← Voltar aos Serviços</a>
+
+        <div class="servico-header">
+            <h1 id="nomeServico"></h1>
+            <p id="descricaoServico"></p>
+        </div>
+
+        <h2 style="margin-bottom: 1rem;">Técnicos Especializados</h2>
+        <div class="tecnicos-grid" id="listaTecnicos"></div>
+    </div>
+
+    <script>
+        const tecnicos = [
+            {
+                id: 1,
+                nome: "Carlos Silva",
+                cidade: "São Paulo",
+                foto: "👨🔧",
+                servicos: ["Troca de Tela", "Troca de Bateria", "Reparo de Placa"],
+                preco: 150,
+                avaliacao: 4.8,
+                avaliacoes: 245
+            },
+            {
+                id: 2,
+                nome: "Ana Santos",
+                cidade: "Rio de Janeiro",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Conector de Carga", "Câmera"],
+                preco: 130,
+                avaliacao: 4.9,
+                avaliacoes: 189
+            },
+            {
+                id: 3,
+                nome: "Pedro Costa",
+                cidade: "São Paulo",
+                foto: "👨🔧",
+                servicos: ["Troca de Tela", "Troca de Bateria", "Software"],
+                preco: 140,
+                avaliacao: 4.7,
+                avaliacoes: 312
+            },
+            {
+                id: 4,
+                nome: "Maria Oliveira",
+                cidade: "Belo Horizonte",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Bateria", "Placa Mãe"],
+                preco: 120,
+                avaliacao: 4.6,
+                avaliacoes: 156
+            },
+            {
+                id: 5,
+                nome: "João Ferreira",
+                cidade: "Brasília",
+                foto: "👨🔧",
+                servicos: ["Troca de Tela", "Câmera", "Alto-falante"],
+                preco: 135,
+                avaliacao: 4.8,
+                avaliacoes: 198
+            },
+            {
+                id: 6,
+                nome: "Juliana Lima",
+                cidade: "Curitiba",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Bateria", "Conector de Carga"],
+                preco: 125,
+                avaliacao: 4.9,
+                avaliacoes: 223
+            },
+            {
+                id: 7,
+                nome: "Roberto Alves",
+                cidade: "Salvador",
+                foto: "👨🔧",
+                servicos: ["Reparo de Placa", "Software", "Troca de Tela"],
+                preco: 145,
+                avaliacao: 4.7,
+                avaliacoes: 167
+            },
+            {
+                id: 8,
+                nome: "Fernanda Souza",
+                cidade: "Fortaleza",
+                foto: "👩🔧",
+                servicos: ["Câmera", "Bateria", "Troca de Tela"],
+                preco: 130,
+                avaliacao: 4.8,
+                avaliacoes: 201
+            },
+            {
+                id: 9,
+                nome: "Lucas Martins",
+                cidade: "Brasília",
+                foto: "👨🔧",
+                servicos: ["Alto-falante", "Conector de Carga", "Câmera"],
+                preco: 125,
+                avaliacao: 4.6,
+                avaliacoes: 134
+            },
+            {
+                id: 10,
+                nome: "Beatriz Costa",
+                cidade: "São Paulo",
+                foto: "👩🔧",
+                servicos: ["Troca de Bateria", "Reparo de Placa", "Software"],
+                preco: 160,
+                avaliacao: 4.9,
+                avaliacoes: 289
+            },
+            {
+                id: 11,
+                nome: "Felipe Santos",
+                cidade: "Rio de Janeiro",
+                foto: "👨🔧",
+                servicos: ["Conector de Carga", "Alto-falante", "Câmera"],
+                preco: 135,
+                avaliacao: 4.7,
+                avaliacoes: 156
+            },
+            {
+                id: 12,
+                nome: "Camila Rocha",
+                cidade: "Belo Horizonte",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Bateria", "Software"],
+                preco: 140,
+                avaliacao: 4.8,
+                avaliacoes: 267
+            }
+        ];
+
+        const descricoes = {
+            "Troca de Tela": "Substituição de tela quebrada ou danificada com peças originais e garantia",
+            "Troca de Bateria": "Troca de bateria com diagnóstico completo do aparelho",
+            "Conector de Carga": "Reparo ou substituição do conector de carga",
+            "Reparo de Placa": "Reparo de placa-mãe e componentes eletrônicos",
+            "Câmera": "Reparo ou substituição de câmera frontal ou traseira",
+            "Alto-falante": "Reparo de áudio, alto-falante e microfone",
+            "Software": "Limpeza de vírus, atualização e otimização de sistema",
+            "Placa Mãe": "Reparo especializado de placa-mãe"
+        };
+
+        function carregarServico() {
+            const params = new URLSearchParams(window.location.search);
+            const servico = params.get('servico');
+
+            if (!servico) {
+                window.location.href = 'servicos.html';
+                return;
+            }
+
+            document.getElementById('nomeServico').textContent = servico;
+            document.getElementById('descricaoServico').textContent = descricoes[servico] || 'Serviço especializado';
+
+            const tecnicosFiltrados = tecnicos.filter(tec =>
+                tec.servicos.some(s => s.toLowerCase() === servico.toLowerCase())
+            );
+
+            renderizarTecnicos(tecnicosFiltrados);
+        }
+
+        function renderizarTecnicos(lista) {
+            const container = document.getElementById('listaTecnicos');
+
+            if (lista.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">Nenhum técnico disponível</p>';
+                return;
+            }
+
+            container.innerHTML = lista.map(tec => `
+                <div class="tecnico-card">
+                    <div class="tecnico-foto">${tec.foto}</div>
+                    <div class="tecnico-info">
+                        <div class="tecnico-nome">${tec.nome}</div>
+                        <div class="tecnico-cidade">📍 ${tec.cidade}</div>
+                        <div class="tecnico-avaliacao">
+                            <span class="stars">⭐ ${tec.avaliacao}</span>
+                            <span>(${tec.avaliacoes})</span>
+                        </div>
+                        <div class="tecnico-preco">R$ ${tec.preco}</div>
+                        <div class="tecnico-servicos">
+                            ${tec.servicos.slice(0, 2).map(s => `<span class="servico-tag">${s}</span>`).join('')}
+                        </div>
+                        <button class="btn-solicitar" onclick="solicitarServico('${tec.nome}')">
+                            Solicitar Serviço
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function solicitarServico(nomeTecnico) {
+            const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+            if (!usuario.email) {
+                alert('Faça login para solicitar um serviço');
+                window.location.href = 'pages/login.html';
+            } else {
+                alert(`Solicitação enviada para ${nomeTecnico}!\nO técnico entrará em contato em breve.`);
+            }
+        }
+
+        carregarServico();
+    </script>
+</body>
+</html>

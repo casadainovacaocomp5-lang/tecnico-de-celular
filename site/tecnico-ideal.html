@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnico Ideal - CelularTech</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .filtros-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filtro-grupo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filtro-grupo label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .filtro-grupo input,
+        .filtro-grupo select {
+            padding: 0.8rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn-buscar {
+            width: 100%;
+            padding: 1rem;
+            background: #3B82F6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-buscar:hover {
+            background: #2563EB;
+        }
+
+        .resultado-container {
+            margin-top: 2rem;
+        }
+
+        .tecnico-ideal {
+            background: linear-gradient(135deg, #3B82F6, #1E40AF);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tecnico-ideal h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .tecnico-ideal-foto {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tecnico-ideal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-valor {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .btn-solicitar-ideal {
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            background: #10B981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .btn-solicitar-ideal:hover {
+            background: #059669;
+        }
+
+        .outros-tecnicos {
+            margin-top: 2rem;
+        }
+
+        .tecnicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .tecnico-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tecnico-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .tecnico-foto {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .tecnico-info {
+            padding: 1rem;
+        }
+
+        .tecnico-nome {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .tecnico-cidade {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tecnico-avaliacao {
+            color: #FCD34D;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .tecnico-preco {
+            color: #3B82F6;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .btn-ver {
+            width: 100%;
+            padding: 0.6rem;
+            background: #3B82F6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-ver:hover {
+            background: #2563EB;
+        }
+
+        .mensagem {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .filtros-grid {
+                grid-template-columns: 1fr;
+            }
+            .tecnicos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="servicos.html">Serviços</a>
+                <a href="pages/tecnicos.html">Técnicos</a>
+                <a href="pages/login.html">Entrar</a>
+                <a href="pages/cadastro.html" class="btn-primary">Cadastrar</a>
+            </div>
+        </nav>
+    </section>
+
+    <div class="container" style="padding: 2rem 0;">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Encontre seu Técnico Ideal</h1>
+
+        <div class="filtros-container">
+            <div class="filtros-grid">
+                <div class="filtro-grupo">
+                    <label>Serviço</label>
+                    <select id="filtroServico">
+                        <option value="">Selecione um serviço</option>
+                        <option value="Troca de Tela">Troca de Tela</option>
+                        <option value="Troca de Bateria">Troca de Bateria</option>
+                        <option value="Conector de Carga">Conector de Carga</option>
+                        <option value="Reparo de Placa">Reparo de Placa</option>
+                        <option value="Câmera">Câmera</option>
+                        <option value="Alto-falante">Alto-falante</option>
+                        <option value="Software">Software</option>
+                        <option value="Placa Mãe">Placa Mãe</option>
+                    </select>
+                </div>
+
+                <div class="filtro-grupo">
+                    <label>Cidade</label>
+                    <input type="text" id="filtroCidade" placeholder="Digite sua cidade">
+                </div>
+
+                <div class="filtro-grupo">
+                    <label>Avaliação Mínima</label>
+                    <select id="filtroAvaliacao">
+                        <option value="">Qualquer uma</option>
+                        <option value="4.5">4.5+ ⭐</option>
+                        <option value="4">4+ ⭐</option>
+                        <option value="3.5">3.5+ ⭐</option>
+                    </select>
+                </div>
+
+                <div class="filtro-grupo">
+                    <label>Preço Máximo</label>
+                    <input type="number" id="filtroPreco" placeholder="Ex: 150">
+                </div>
+            </div>
+
+            <button class="btn-buscar" onclick="buscarTecnicoIdeal()">🔍 Buscar Técnico Ideal</button>
+        </div>
+
+        <div class="resultado-container" id="resultado"></div>
+    </div>
+
+    <script>
+        const tecnicos = [
+            {
+                id: 1,
+                nome: "Carlos Silva",
+                cidade: "São Paulo",
+                foto: "👨🔧",
+                servicos: ["Troca de Tela", "Troca de Bateria", "Reparo de Placa"],
+                preco: 150,
+                avaliacao: 4.8,
+                avaliacoes: 245,
+                telefone: "(11) 98765-4321"
+            },
+            {
+                id: 2,
+                nome: "Ana Santos",
+                cidade: "Rio de Janeiro",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Conector de Carga", "Câmera"],
+                preco: 130,
+                avaliacao: 4.9,
+                avaliacoes: 189,
+                telefone: "(21) 97654-3210"
+            },
+            {
+                id: 3,
+                nome: "Pedro Costa",
+                cidade: "São Paulo",
+                foto: "👨🔧",
+                servicos: ["Troca de Tela", "Troca de Bateria", "Software"],
+                preco: 140,
+                avaliacao: 4.7,
+                avaliacoes: 312,
+                telefone: "(11) 96543-2109"
+            },
+            {
+                id: 4,
+                nome: "Maria Oliveira",
+                cidade: "Belo Horizonte",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Bateria", "Placa Mãe"],
+                preco: 120,
+                avaliacao: 4.6,
+                avaliacoes: 156,
+                telefone: "(31) 95432-1098"
+            },
+            {
+                id: 5,
+                nome: "João Ferreira",
+                cidade: "Brasília",
+                foto: "👨🔧",
+                servicos: ["Troca de Tela", "Câmera", "Alto-falante"],
+                preco: 135,
+                avaliacao: 4.8,
+                avaliacoes: 198,
+                telefone: "(61) 94321-0987"
+            },
+            {
+                id: 6,
+                nome: "Juliana Lima",
+                cidade: "Curitiba",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Bateria", "Conector de Carga"],
+                preco: 125,
+                avaliacao: 4.9,
+                avaliacoes: 223,
+                telefone: "(41) 93210-9876"
+            },
+            {
+                id: 7,
+                nome: "Roberto Alves",
+                cidade: "Salvador",
+                foto: "👨🔧",
+                servicos: ["Reparo de Placa", "Software", "Troca de Tela"],
+                preco: 145,
+                avaliacao: 4.7,
+                avaliacoes: 167,
+                telefone: "(71) 92109-8765"
+            },
+            {
+                id: 8,
+                nome: "Fernanda Souza",
+                cidade: "Fortaleza",
+                foto: "👩🔧",
+                servicos: ["Câmera", "Bateria", "Troca de Tela"],
+                preco: 130,
+                avaliacao: 4.8,
+                avaliacoes: 201,
+                telefone: "(85) 91098-7654"
+            },
+            {
+                id: 9,
+                nome: "Lucas Martins",
+                cidade: "Brasília",
+                foto: "👨🔧",
+                servicos: ["Alto-falante", "Conector de Carga", "Câmera"],
+                preco: 125,
+                avaliacao: 4.6,
+                avaliacoes: 134,
+                telefone: "(61) 98765-4321"
+            },
+            {
+                id: 10,
+                nome: "Beatriz Costa",
+                cidade: "São Paulo",
+                foto: "👩🔧",
+                servicos: ["Troca de Bateria", "Reparo de Placa", "Software"],
+                preco: 160,
+                avaliacao: 4.9,
+                avaliacoes: 289,
+                telefone: "(11) 97654-3210"
+            },
+            {
+                id: 11,
+                nome: "Felipe Santos",
+                cidade: "Rio de Janeiro",
+                foto: "👨🔧",
+                servicos: ["Conector de Carga", "Alto-falante", "Câmera"],
+                preco: 135,
+                avaliacao: 4.7,
+                avaliacoes: 156,
+                telefone: "(21) 96543-2109"
+            },
+            {
+                id: 12,
+                nome: "Camila Rocha",
+                cidade: "Belo Horizonte",
+                foto: "👩🔧",
+                servicos: ["Troca de Tela", "Bateria", "Software"],
+                preco: 140,
+                avaliacao: 4.8,
+                avaliacoes: 267,
+                telefone: "(31) 95432-1098"
+            }
+        ];
+
+        function buscarTecnicoIdeal() {
+            const servico = document.getElementById('filtroServico').value;
+            const cidade = document.getElementById('filtroCidade').value.toLowerCase();
+            const avaliacao = parseFloat(document.getElementById('filtroAvaliacao').value) || 0;
+            const preco = parseFloat(document.getElementById('filtroPreco').value) || Infinity;
+
+            if (!servico) {
+                alert('Selecione um serviço');
+                return;
+            }
+
+            let filtrados = tecnicos.filter(tec => {
+                const temServico = tec.servicos.some(s => s.toLowerCase() === servico.toLowerCase());
+                const temCidade = !cidade || tec.cidade.toLowerCase().includes(cidade);
+                const temAvaliacao = tec.avaliacao >= avaliacao;
+                const temPreco = tec.preco <= preco;
+                return temServico && temCidade && temAvaliacao && temPreco;
+            });
+
+            if (filtrados.length === 0) {
+                document.getElementById('resultado').innerHTML = '<div class="mensagem">Nenhum técnico encontrado com esses critérios</div>';
+                return;
+            }
+
+            filtrados.sort((a, b) => b.avaliacao - a.avaliacao);
+            const ideal = filtrados[0];
+
+            let html = `
+                <div class="tecnico-ideal">
+                    <h2>✨ Seu Técnico Ideal</h2>
+                    <div class="tecnico-ideal-foto">${ideal.foto}</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">${ideal.nome}</h3>
+                    <div class="tecnico-ideal-info">
+                        <div class="info-item">
+                            <div class="info-label">Avaliação</div>
+                            <div class="info-valor">⭐ ${ideal.avaliacao}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Preço</div>
+                            <div class="info-valor">R$ ${ideal.preco}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Cidade</div>
+                            <div class="info-valor">📍 ${ideal.cidade}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Serviços</div>
+                            <div class="info-valor">${ideal.avaliacoes}</div>
+                        </div>
+                    </div>
+                    <button class="btn-solicitar-ideal" onclick="solicitarServico('${ideal.nome}')">
+                        Solicitar Serviço
+                    </button>
+                </div>
+            `;
+
+            if (filtrados.length > 1) {
+                html += `
+                    <div class="outros-tecnicos">
+                        <h3>Outras Opções</h3>
+                        <div class="tecnicos-grid">
+                            ${filtrados.slice(1).map(tec => `
+                                <div class="tecnico-card">
+                                    <div class="tecnico-foto">${tec.foto}</div>
+                                    <div class="tecnico-info">
+                                        <div class="tecnico-nome">${tec.nome}</div>
+                                        <div class="tecnico-cidade">📍 ${tec.cidade}</div>
+                                        <div class="tecnico-avaliacao">⭐ ${tec.avaliacao}</div>
+                                        <div class="tecnico-preco">R$ ${tec.preco}</div>
+                                        <button class="btn-ver" onclick="solicitarServico('${tec.nome}')">
+                                            Solicitar
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('resultado').innerHTML = html;
+        }
+
+        function solicitarServico(nomeTecnico) {
+            const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+            if (!usuario.email) {
+                alert('Faça login para solicitar um serviço');
+                window.location.href = 'pages/login.html';
+            } else {
+                alert(`Solicitação enviada para ${nomeTecnico}!\nO técnico entrará em contato em breve.`);
+            }
+        }
+    </script>
+</body>
+</html>

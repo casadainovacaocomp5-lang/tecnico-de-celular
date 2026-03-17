@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Técnico - CelularTech</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="../index.html">Início</a>
+                <a href="tecnicos.html">Técnicos</a>
+            </div>
+        </nav>
+    </section>
+
+    <div class="container" style="padding: 2rem 0;">
+        <div id="perfilTecnico"></div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        const tecnicos = [
+            {
+                id: 1,
+                nome: "Carlos Silva",
+                cidade: "São Paulo",
+                especialidades: ["Troca de Tela", "Troca de Bateria", "Reparo de Placa"],
+                preco: 150,
+                avaliacao: 4.8,
+                servicos: 245,
+                telefone: "(11) 98765-4321",
+                descricao: "Especialista em iPhone e Samsung com 10 anos de experiência no mercado",
+                servicosOferecidos: [
+                    { nome: "Troca de Tela", descricao: "Tela original com garantia de 90 dias", preco: 200 },
+                    { nome: "Troca de Bateria", descricao: "Bateria de alta qualidade", preco: 120 }
+                ],
+                avaliacoes: [
+                    { nome: "João Silva", nota: 5, comentario: "Excelente profissional!", data: "2024-01-15" },
+                    { nome: "Maria Santos", nota: 4, comentario: "Muito bom serviço", data: "2024-01-10" }
+                ]
+            },
+            {
+                id: 2,
+                nome: "Ana Santos",
+                cidade: "Rio de Janeiro",
+                especialidades: ["Troca de Tela", "Conector de Carga", "Câmera"],
+                preco: 130,
+                avaliacao: 4.9,
+                servicos: 189,
+                telefone: "(21) 97654-3210",
+                descricao: "Técnica especializada em Xiaomi e Motorola",
+                servicosOferecidos: [
+                    { nome: "Troca de Tela", descricao: "Instalação rápida", preco: 180 }
+                ],
+                avaliacoes: []
+            }
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'));
+        const tecnico = tecnicos.find(t => t.id === id);
+
+        if (tecnico) {
+            document.getElementById('perfilTecnico').innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 2rem; align-items: start;">
+                        <div style="width: 120px; height: 120px; background: #E5E7EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                            👤
+                        </div>
+                        <div style="flex: 1;">
+                            <h1 style="margin-bottom: 0.5rem;">${tecnico.nome}</h1>
+                            <p style="color: #666; margin-bottom: 0.5rem;">📍 ${tecnico.cidade} | 📞 ${tecnico.telefone}</p>
+                            <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                                <span style="color: #FCD34D; font-size: 1.2rem;">⭐ ${tecnico.avaliacao}</span>
+                                <span style="color: #666;">(${tecnico.servicos} serviços realizados)</span>
+                            </div>
+                            <p style="color: #666; margin-bottom: 1rem;">${tecnico.descricao}</p>
+                            <button onclick="solicitarConserto()" class="btn-primary" style="padding: 1rem 2rem;">Solicitar Conserto</button>
+                        </div>
+                    </div>
+                </div>
+
+                ${tecnico.servicosOferecidos.length > 0 ? `
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+                        <h2 style="margin-bottom: 1.5rem;">Serviços Oferecidos</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                            ${tecnico.servicosOferecidos.map(serv => `
+                                <div style="border: 1px solid #E5E7EB; padding: 1.5rem; border-radius: 8px;">
+                                    <h3 style="margin-bottom: 0.5rem;">${serv.nome}</h3>
+                                    <p style="color: #666; margin-bottom: 1rem;">${serv.descricao}</p>
+                                    <p style="color: #3B82F6; font-size: 1.3rem; font-weight: bold;">R$ ${serv.preco}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${tecnico.avaliacoes.length > 0 ? `
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h2 style="margin-bottom: 1.5rem;">Avaliações</h2>
+                        ${tecnico.avaliacoes.map(av => `
+                            <div style="border-bottom: 1px solid #E5E7EB; padding-bottom: 1rem; margin-bottom: 1rem;">
+                                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="color: #FCD34D;">${'⭐'.repeat(av.nota)}</span>
+                                    <strong>${av.nome}</strong>
+                                    <span style="color: #999; font-size: 0.9rem;">${av.data}</span>
+                                </div>
+                                <p style="color: #666;">${av.comentario}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            `;
+        } else {
+            document.getElementById('perfilTecnico').innerHTML = '<p>Técnico não encontrado</p>';
+        }
+
+        function solicitarConserto() {
+            const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+            if (!usuario.email) {
+                alert('Faça login para solicitar um conserto');
+                window.location.href = 'login.html';
+            } else {
+                alert('Pedido enviado com sucesso! O técnico entrará em contato.');
+            }
+        }
+    </script>
+</body>
+</html>

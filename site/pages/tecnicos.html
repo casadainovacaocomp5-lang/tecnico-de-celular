@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicos - CelularTech</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="../index.html">Início</a>
+                <a href="tecnicos.html">Técnicos</a>
+                <a href="login.html">Entrar</a>
+                <a href="cadastro.html" class="btn-primary">Cadastrar</a>
+            </div>
+        </nav>
+    </section>
+
+    <div class="container" style="padding: 2rem 0;">
+        <h1>Encontre seu Técnico Ideal</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 1rem;">Exemplos de serviços: Troca de Tela, Troca de Bateria, Conector de Carga, Câmera, Reparo de Placa, Software</p>
+
+        <div class="filters">
+            <div class="filter-grid">
+                <input type="text" id="filtroCidade" placeholder="Cidade" onkeyup="filtrarTecnicos()">
+                <input type="text" id="filtroServico" placeholder="Serviço" onkeyup="filtrarTecnicos()">
+                <select id="filtroAvaliacao" onchange="filtrarTecnicos()">
+                    <option value="">Avaliação mínima</option>
+                    <option value="4">4+ estrelas</option>
+                    <option value="3">3+ estrelas</option>
+                </select>
+                <select id="ordenar" onchange="filtrarTecnicos()">
+                    <option value="">Ordenar por</option>
+                    <option value="avaliacao">Melhor avaliação</option>
+                    <option value="preco-asc">Menor preço</option>
+                    <option value="preco-desc">Maior preço</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="listaTecnicos" class="tech-grid"></div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        const tecnicos = [
+            {
+                id: 1,
+                nome: "Carlos Silva",
+                cidade: "São Paulo",
+                especialidades: ["Troca de Tela", "Troca de Bateria", "Reparo de Placa"],
+                preco: 150,
+                avaliacao: 4.8,
+                servicos: 245,
+                telefone: "(11) 98765-4321"
+            },
+            {
+                id: 2,
+                nome: "Ana Santos",
+                cidade: "Rio de Janeiro",
+                especialidades: ["Troca de Tela", "Conector de Carga", "Câmera"],
+                preco: 130,
+                avaliacao: 4.9,
+                servicos: 189,
+                telefone: "(21) 97654-3210"
+            },
+            {
+                id: 3,
+                nome: "Pedro Costa",
+                cidade: "São Paulo",
+                especialidades: ["Troca de Tela", "Troca de Bateria", "Software"],
+                preco: 140,
+                avaliacao: 4.7,
+                servicos: 312,
+                telefone: "(11) 96543-2109"
+            },
+            {
+                id: 4,
+                nome: "Maria Oliveira",
+                cidade: "Belo Horizonte",
+                especialidades: ["Troca de Tela", "Bateria", "Placa Mãe"],
+                preco: 120,
+                avaliacao: 4.6,
+                servicos: 156,
+                telefone: "(31) 95432-1098"
+            },
+            {
+                id: 5,
+                nome: "João Ferreira",
+                cidade: "Brasília",
+                especialidades: ["Troca de Tela", "Câmera", "Alto-falante"],
+                preco: 135,
+                avaliacao: 4.8,
+                servicos: 198,
+                telefone: "(61) 94321-0987"
+            },
+            {
+                id: 6,
+                nome: "Juliana Lima",
+                cidade: "Curitiba",
+                especialidades: ["Troca de Tela", "Bateria", "Conector de Carga"],
+                preco: 125,
+                avaliacao: 4.9,
+                servicos: 223,
+                telefone: "(41) 93210-9876"
+            },
+            {
+                id: 7,
+                nome: "Roberto Alves",
+                cidade: "Salvador",
+                especialidades: ["Troca de Tela", "Reparo de Placa", "Software"],
+                preco: 145,
+                avaliacao: 4.7,
+                servicos: 167,
+                telefone: "(71) 92109-8765"
+            },
+            {
+                id: 8,
+                nome: "Fernanda Souza",
+                cidade: "Fortaleza",
+                especialidades: ["Troca de Tela", "Bateria", "Câmera"],
+                preco: 130,
+                avaliacao: 4.8,
+                servicos: 201,
+                telefone: "(85) 91098-7654"
+            },
+            {
+                id: 9,
+                nome: "Lucas Martins",
+                cidade: "Brasília",
+                especialidades: ["Alto-falante", "Conector de Carga", "Câmera"],
+                preco: 125,
+                avaliacao: 4.6,
+                servicos: 134,
+                telefone: "(61) 98765-4321"
+            },
+            {
+                id: 10,
+                nome: "Beatriz Costa",
+                cidade: "São Paulo",
+                especialidades: ["Troca de Bateria", "Reparo de Placa", "Software"],
+                preco: 160,
+                avaliacao: 4.9,
+                servicos: 289,
+                telefone: "(11) 97654-3210"
+            },
+            {
+                id: 11,
+                nome: "Felipe Santos",
+                cidade: "Rio de Janeiro",
+                especialidades: ["Conector de Carga", "Alto-falante", "Câmera"],
+                preco: 135,
+                avaliacao: 4.7,
+                servicos: 156,
+                telefone: "(21) 96543-2109"
+            },
+            {
+                id: 12,
+                nome: "Camila Rocha",
+                cidade: "Belo Horizonte",
+                especialidades: ["Troca de Tela", "Bateria", "Software"],
+                preco: 140,
+                avaliacao: 4.8,
+                servicos: 267,
+                telefone: "(31) 95432-1098"
+            }
+        ];
+
+        function renderizarTecnicos(lista) {
+            const container = document.getElementById('listaTecnicos');
+            
+            if (lista.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">Nenhum técnico encontrado</p>';
+                return;
+            }
+            
+            container.innerHTML = lista.map(tec => `
+                <div class="tech-card">
+                    <div class="tech-header">
+                        <div class="tech-avatar">👤</div>
+                        <div class="tech-info">
+                            <h3>${tec.nome}</h3>
+                            <div class="tech-location">📍 ${tec.cidade}</div>
+                            <div class="tech-rating">
+                                <span class="stars">⭐</span>
+                                <strong>${tec.avaliacao}</strong>
+                                <span style="color: #666;">(${tec.servicos} serviços)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="specialties">
+                        ${tec.especialidades.slice(0, 3).map(esp => 
+                            `<span class="specialty-tag">${esp}</span>`
+                        ).join('')}
+                    </div>
+                    <div class="tech-footer">
+                        <span class="price">R$ ${tec.preco}</span>
+                        <a href="tecnico-perfil.html?id=${tec.id}" class="btn-primary">Ver Perfil</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filtrarTecnicos() {
+            const cidade = document.getElementById('filtroCidade').value.toLowerCase();
+            const servico = document.getElementById('filtroServico').value.toLowerCase();
+            const avaliacao = document.getElementById('filtroAvaliacao').value;
+            const ordenar = document.getElementById('ordenar').value;
+            
+            let filtrados = tecnicos.filter(tec => {
+                const matchCidade = !cidade || tec.cidade.toLowerCase().includes(cidade);
+                const matchServico = !servico || tec.especialidades.some(e => e.toLowerCase().includes(servico));
+                const matchAvaliacao = !avaliacao || tec.avaliacao >= parseFloat(avaliacao);
+                return matchCidade && matchServico && matchAvaliacao;
+            });
+            
+            if (ordenar === 'avaliacao') {
+                filtrados.sort((a, b) => b.avaliacao - a.avaliacao);
+            } else if (ordenar === 'preco-asc') {
+                filtrados.sort((a, b) => a.preco - b.preco);
+            } else if (ordenar === 'preco-desc') {
+                filtrados.sort((a, b) => b.preco - a.preco);
+            }
+            
+            renderizarTecnicos(filtrados);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const cidadeParam = params.get('cidade');
+        const servicoParam = params.get('servico');
+        
+        if (cidadeParam) {
+            document.getElementById('filtroCidade').value = cidadeParam;
+        }
+        if (servicoParam) {
+            document.getElementById('filtroServico').value = servicoParam;
+        }
+        
+        filtrarTecnicos();
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cliente - CelularTech</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="../index.html">Início</a>
+                <a href="tecnicos.html">Técnicos</a>
+                <a href="dashboard-cliente.html">Dashboard</a>
+                <button onclick="logout()" class="btn-primary">Sair</button>
+            </div>
+        </nav>
+    </section>
+
+    <div class="container dashboard">
+        <h1>Meus Pedidos</h1>
+        <div id="listaPedidos"></div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+        
+        if (!usuario.email || usuario.tipo !== 'cliente') {
+            window.location.href = 'login.html';
+        }
+
+        const pedidos = JSON.parse(localStorage.getItem('pedidos') || '[]');
+
+        function renderizarPedidos() {
+            const container = document.getElementById('listaPedidos');
+            
+            if (pedidos.length === 0) {
+                container.innerHTML = `
+                    <div style="background: white; padding: 3rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <p style="color: #666; margin-bottom: 1.5rem;">Você ainda não fez nenhum pedido</p>
+                        <a href="tecnicos.html" class="btn-primary" style="padding: 1rem 2rem;">Encontrar Técnicos</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = pedidos.map((pedido, index) => `
+                <div class="request-card">
+                    <div class="request-header">
+                        <div>
+                            <h3>${pedido.servico}</h3>
+                            <p style="color: #666;">Técnico: ${pedido.tecnico}</p>
+                        </div>
+                        <span class="status-badge status-${pedido.status}">${getStatusTexto(pedido.status)}</span>
+                    </div>
+                    <p style="color: #666; margin-bottom: 1rem;">${pedido.descricao}</p>
+                    <p style="color: #999; font-size: 0.9rem;">Criado em: ${pedido.data}</p>
+                    ${pedido.status === 'completed' ? `
+                        <button onclick="avaliar(${index})" class="btn-secondary" style="margin-top: 1rem; padding: 0.5rem 1rem;">
+                            Avaliar Técnico
+                        </button>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function getStatusTexto(status) {
+            const textos = {
+                pending: 'Pendente',
+                accepted: 'Aceito',
+                in_progress: 'Em Andamento',
+                completed: 'Concluído',
+                rejected: 'Recusado'
+            };
+            return textos[status] || status;
+        }
+
+        function avaliar(index) {
+            const nota = prompt('Avalie de 1 a 5 estrelas:');
+            const comentario = prompt('Deixe um comentário (opcional):');
+            
+            if (nota && nota >= 1 && nota <= 5) {
+                alert('Avaliação enviada com sucesso!');
+                pedidos[index].avaliado = true;
+                localStorage.setItem('pedidos', JSON.stringify(pedidos));
+                renderizarPedidos();
+            }
+        }
+
+        renderizarPedidos();
+    </script>
+</body>
+</html>

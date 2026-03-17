@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CelularTech - Encontre Técnicos de Celular</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .feature-card {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="servicos.html">Serviços</a>
+                <a href="pages/tecnicos.html">Técnicos</a>
+                <a href="pages/login.html">Entrar</a>
+                <a href="pages/cadastro.html" class="btn-primary">Cadastrar</a>
+            </div>
+        </nav>
+        <div class="container" style="padding-bottom: 1rem;">
+            <div class="search-box">
+                <input type="text" id="searchCity" placeholder="Qual é sua cidade?" onkeypress="if(event.key==='Enter') buscarTecnicos()">
+                <input type="text" id="searchService" placeholder="Qual o problema? (ex: tela quebrada)" onkeypress="if(event.key==='Enter') buscarTecnicos()">
+                <button onclick="buscarTecnicos()">🔍 Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero">
+        <div class="container" style="position: relative; z-index: 1;">
+            <h1 style="font-size: 2rem;">Encontre o Melhor Técnico para seu Celular</h1>
+            <p style="font-size: 1rem;">CelularTech não tem erro, é só contratar e ser feliz</p>
+        </div>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1200') center/cover; opacity: 0.15; z-index: 0;"></div>
+    </section>
+
+    <section class="features">
+        <div class="container" style="position: relative; z-index: 1;">
+            <h2>Aqui na CelularTech temos os melhores técnicos</h2>
+            <div class="features-grid">
+                <a href="tecnico-ideal.html" style="text-decoration: none; color: inherit;">
+                    <div class="feature-card">
+                        <div class="icon"><img src="https://cdn-icons-png.flaticon.com/512/644/644458.png" alt="Celular" style="width: 60px; height: 60px;"></div>
+                        <h3>Técnicos Especializados</h3>
+                        <p>Profissionais qualificados e experientes</p>
+                    </div>
+                </a>
+                <div class="feature-card">
+                    <div class="icon">⭐⭐⭐⭐⭐</div>
+                    <h3>Avaliações Reais</h3>
+                    <p>Sistema transparente de avaliações</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Segurança pro seu Celular</h3>
+                    <p>Plataforma segura e confiável</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container" style="position: relative; z-index: 1;">
+            <h2>Serviços Populares</h2>
+            <div class="services-grid">
+                <a href="servico-detalhes.html?servico=Troca de Tela" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <div class="service-icon">📱</div>
+                    <h3>Troca de Tela</h3>
+                    <p>Troca de tela com garantia</p>
+                </a>
+                <a href="servico-detalhes.html?servico=Troca de Bateria" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <div class="service-icon">🔋</div>
+                    <h3>Troca de Bateria</h3>
+                    <p>Troca de bateria e diagnóstico</p>
+                </a>
+                <a href="servico-detalhes.html?servico=Conector de Carga" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <div class="service-icon">🔌</div>
+                    <h3>Conector de Carga</h3>
+                    <p>Reparo ou troca de carregador</p>
+                </a>
+                <a href="servico-detalhes.html?servico=Reparo de Placa" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Reparo de Placa</h3>
+                    <p>Reparo de placa-mãe</p>
+                </a>
+                <a href="servico-detalhes.html?servico=Câmera" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <div class="service-icon">📷</div>
+                    <h3>Câmera</h3>
+                    <p>Reparo de câmera frontal/traseira</p>
+                </a>
+                <a href="servico-detalhes.html?servico=Alto-falante" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <div class="service-icon">🔊</div>
+                    <h3>Alto-falante</h3>
+                    <p>Reparo de áudio e microfone</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-tech">
+        <div class="container">
+            <h2>Você é um técnico?</h2>
+            <p>Cadastre-se e comece a receber solicitações hoje mesmo!</p>
+            <a href="pages/cadastro.html" class="btn-secondary">Cadastrar como Técnico</a>
+        </div>
+    </section>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

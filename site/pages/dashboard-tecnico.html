@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Técnico - CelularTech</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <section class="cta">
+        <nav class="container">
+            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+            <div class="nav-links">
+                <a href="../index.html">Início</a>
+                <a href="dashboard-tecnico.html">Dashboard</a>
+                <button onclick="logout()" class="btn-primary">Sair</button>
+            </div>
+        </nav>
+    </section>
+
+    <div class="container dashboard">
+        <h1>Pedidos Recebidos</h1>
+        <div id="listaPedidos"></div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+        
+        if (!usuario.email || usuario.tipo !== 'tecnico') {
+            window.location.href = 'login.html';
+        }
+
+        let pedidos = JSON.parse(localStorage.getItem('pedidosTecnico') || JSON.stringify([
+            {
+                id: 1,
+                cliente: "João Silva",
+                telefone: "(11) 99999-9999",
+                cidade: "São Paulo",
+                servico: "Troca de Tela",
+                descricao: "iPhone 12 com tela quebrada no canto superior",
+                status: "pending",
+                data: "2024-01-15"
+            },
+            {
+                id: 2,
+                cliente: "Maria Santos",
+                telefone: "(11) 98888-8888",
+                cidade: "São Paulo",
+                servico: "Troca de Bateria",
+                descricao: "Samsung Galaxy S21 bateria viciada",
+                status: "accepted",
+                data: "2024-01-14"
+            }
+        ]));
+
+        function renderizarPedidos() {
+            const container = document.getElementById('listaPedidos');
+            
+            if (pedidos.length === 0) {
+                container.innerHTML = `
+                    <div style="background: white; padding: 3rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <p style="color: #666;">Você ainda não recebeu nenhum pedido</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = pedidos.map((pedido, index) => `
+                <div class="request-card">
+                    <div class="request-header">
+                        <div>
+                            <h3>${pedido.servico}</h3>
+                            <p style="color: #666;">Cliente: ${pedido.cliente}</p>
+                            <p style="color: #666;">Telefone: ${pedido.telefone}</p>
+                            <p style="color: #666;">Cidade: ${pedido.cidade}</p>
+                        </div>
+                        <span class="status-badge status-${pedido.status}">${getStatusTexto(pedido.status)}</span>
+                    </div>
+                    <p style="color: #666; margin-bottom: 1rem;">${pedido.descricao}</p>
+                    <p style="color: #999; font-size: 0.9rem; margin-bottom: 1rem;">Criado em: ${pedido.data}</p>
+                    
+                    ${pedido.status === 'pending' ? `
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="atualizarStatus(${index}, 'accepted')" 
+                                    style="background: #10B981; color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer;">
+                                Aceitar
+                            </button>
+                            <button onclick="atualizarStatus(${index}, 'rejected')" 
+                                    style="background: #EF4444; color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer;">
+                                Recusar
+                            </button>
+                        </div>
+                    ` : ''}
+                    
+                    ${pedido.status === 'accepted' ? `
+                        <button onclick="atualizarStatus(${index}, 'in_progress')" 
+                                style="background: #3B82F6; color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer;">
+                            Iniciar Serviço
+                        </button>
+                    ` : ''}
+                    
+                    ${pedido.status === 'in_progress' ? `
+                        <button onclick="atualizarStatus(${index}, 'completed')" 
+                                style="background: #10B981; color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer;">
+                            Marcar como Concluído
+                        </button>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function getStatusTexto(status) {
+            const textos = {
+                pending: 'Pendente',
+                accepted: 'Aceito',
+                in_progress: 'Em Andamento',
+                completed: 'Concluído',
+                rejected: 'Recusado'
+            };
+            return textos[status] || status;
+        }
+
+        function atualizarStatus(index, novoStatus) {
+            pedidos[index].status = novoStatus;
+            localStorage.setItem('pedidosTecnico', JSON.stringify(pedidos));
+            renderizarPedidos();
+            alert('Status atualizado com sucesso!');
+        }
+
+        renderizarPedidos();
+    </script>
+</body>
+</html>
