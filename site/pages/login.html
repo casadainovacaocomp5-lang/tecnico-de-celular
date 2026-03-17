@@ -5,11 +5,302 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - CelularTech</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: transparent;
+            box-shadow: none;
+            border-bottom: none;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem;
+        }
+
+        .login-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 900px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: white;
+        }
+
+        .login-info {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            color: white;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .login-info h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-info p {
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-list li {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .login-form-section {
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form-section h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-form-section > p {
+            text-align: center;
+            color: #6B7280;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            padding: 0.9rem 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .forgot-pass {
+            text-align: right;
+        }
+
+        .forgot-pass a {
+            color: #3B82F6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-pass a:hover {
+            color: #2563EB;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            margin-top: 0.5rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .divider {
+            text-align: center;
+            color: #6B7280;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #E5E7EB;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .signup-link {
+            background: #F3F4F6;
+            color: #1F2937;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .signup-link:hover {
+            background: #E5E7EB;
+        }
+
+        .test-credentials {
+            background: #F0F9FF;
+            border: 2px solid #93C5FD;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .test-credentials h4 {
+            color: #0C4A6E;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .test-credentials p {
+            color: #0C4A6E;
+            margin-bottom: 0.3rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-info {
+                padding: 2rem 1.5rem;
+                min-height: auto;
+            }
+
+            .login-form-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-info h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="../index.html" class="logo">🔧 CelularTech</a>
+        <nav>
+            <a href="../index.html" class="logo">CelularTech</a>
             <div class="nav-links">
                 <a href="../index.html">Início</a>
                 <a href="cadastro.html">Criar Conta</a>
@@ -17,41 +308,50 @@
         </nav>
     </header>
 
-    <main style="min-height: calc(100vh - 80px); display: flex; align-items: center; padding: 2rem 0;">
-        <div class="container">
-            <div style="max-width: 400px; margin: 0 auto;">
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);">
-                    <h1 style="text-align: center; margin-bottom: 1rem; color: #3B82F6;">Entrar na CelularTech</h1>
-                    <p style="text-align: center; color: #6B7280; margin-bottom: 2rem;">Acesse sua conta como cliente ou técnico</p>
+    <main>
+        <div class="login-container">
+            <div class="login-info">
+                <h2>Bem-vindo de volta! 👋</h2>
+                <p>Acesse sua conta CelularTech para encontrar os melhores técnicos de celular da sua região.</p>
+                
+                <ul class="feature-list">
+                    <li>Encontre técnicos qualificados</li>
+                    <li>Solicitações de serviço fáceis</li>
+                    <li>Avaliações transparentes</li>
+                    <li>Suporte 24/7</li>
+                </ul>
+            </div>
 
-                    <form id="loginForm" class="form">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="seu@email.com">
-                        </div>
+            <div class="login-form-section">
+                <h1>Entrar</h1>
+                <p>Use suas credenciais para acessar</p>
 
-                        <div class="form-group">
-                            <label for="password">Senha</label>
-                            <input type="password" id="password" name="password" required placeholder="••••••••">
-                        </div>
-
-                        <div style="margin-bottom: 1.5rem;">
-                            <a href="#" style="color: #3B82F6; text-decoration: none; font-size: 0.9rem;">Esqueceu a senha?</a>
-                        </div>
-
-                        <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem;">Entrar</button>
-                    </form>
-
-                    <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #E5E7EB;">
-                        <p style="color: #6B7280; margin-bottom: 0.5rem;">Não tem conta?</p>
-                        <a href="cadastro.html" class="btn-secondary" style="width: 100%; text-align: center; display: block;">Criar Conta</a>
+                <form id="loginForm" class="form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="seu@email.com">
                     </div>
 
-                    <div style="background: #DBEAFE; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.85rem;">
-                        <p style="color: #0C4A6E; margin-bottom: 0.5rem;"><strong>Teste rápido:</strong></p>
-                        <p style="color: #0C4A6E;">Email: teste@celular.com</p>
-                        <p style="color: #0C4A6E;">Senha: 123456</p>
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••••">
                     </div>
+
+                    <div class="forgot-pass">
+                        <a href="#">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login">Entrar</button>
+                </form>
+
+                <div class="divider">Não tem conta?</div>
+
+                <a href="cadastro.html" class="signup-link">Criar uma nova conta</a>
+
+                <div class="test-credentials">
+                    <h4>🧪 Teste Rápido:</h4>
+                    <p><strong>Email:</strong> teste@celular.com</p>
+                    <p><strong>Senha:</strong> 123456</p>
                 </div>
             </div>
         </div>
@@ -83,20 +383,5 @@
     </script>
 </body>
 </html>
-            
-            const usuariosStorage = JSON.parse(localStorage.getItem('usuarios') || '[]');
-            const todosUsuarios = [...usuarios, ...usuariosStorage];
-            
-            const usuario = todosUsuarios.find(u => u.email === email && u.senha === senha);
-            
-            if (usuario) {
-                localStorage.setItem('usuario', JSON.stringify(usuario));
-                window.location.href = `dashboard-${usuario.tipo}.html`;
-            } else {
-                document.getElementById('alert').innerHTML = 
-                    '<div class="alert alert-error">Email ou senha incorretos</div>';
-            }
-        }
-    </script>
 </body>
 </html>

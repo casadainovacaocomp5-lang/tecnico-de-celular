@@ -6,74 +6,332 @@
     <title>Serviços - CelularTech</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .servicos-container {
-            padding: 2rem 0;
+        /* Header Hero */
+        .servicos-hero {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            padding: 4rem 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
 
-        .servicos-buttons {
+        .servicos-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .servicos-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .servicos-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navegação */
+        nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 20px;
+        }
+
+        .logo {
+            color: #3B82F6;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6B7280;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3B82F6;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white !important;
+            padding: 0.8rem 1.6rem;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Container */
+        .servicos-container {
+            padding: 3rem 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .servicos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
-        .servico-btn {
-            padding: 1.5rem;
-            border: 2px solid #E5E7EB;
+        /* Cartões de Serviço */
+        .servico-card {
             background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-align: center;
+            border-radius: 16px;
+            padding: 2rem;
             text-decoration: none;
             color: inherit;
-            display: block;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #E5E7EB;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
         }
 
-        .servico-btn:hover {
-            border-color: #3B82F6;
-            background: #F0F9FF;
-            transform: translateY(-4px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        .servico-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
         }
 
+        .servico-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            border-color: transparent;
+        }
+
+        .servico-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .servico-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.4s ease;
+        }
+
+        .servico-card:hover .servico-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .servico-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .servico-card:hover .servico-title {
+            color: var(--gradient-start);
+        }
+
+        .servico-desc {
+            font-size: 0.9rem;
+            color: #6B7280;
+            line-height: 1.5;
+        }
+
+        /* Cores específicas por serviço */
+        .servico-card:nth-child(1) { --gradient-start: #3B82F6; --gradient-end: #2563EB; }
+        .servico-card:nth-child(2) { --gradient-start: #10B981; --gradient-end: #059669; }
+        .servico-card:nth-child(3) { --gradient-start: #F59E0B; --gradient-end: #D97706; }
+        .servico-card:nth-child(4) { --gradient-start: #EF4444; --gradient-end: #DC2626; }
+        .servico-card:nth-child(5) { --gradient-start: #8B5CF6; --gradient-end: #7C3AED; }
+        .servico-card:nth-child(6) { --gradient-start: #06B6D4; --gradient-end: #0891B2; }
+        .servico-card:nth-child(7) { --gradient-start: #EC4899; --gradient-end: #DB2777; }
+        .servico-card:nth-child(8) { --gradient-start: #14B8A6; --gradient-end: #0D9488; }
+
+        /* Responsivo */
         @media (max-width: 768px) {
-            .servicos-buttons {
+            .servicos-hero h1 {
+                font-size: 2rem;
+            }
+
+            .servicos-hero p {
+                font-size: 1rem;
+            }
+
+            nav .container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .servicos-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .servico-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .servico-icon {
+                font-size: 2.5rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .servico-title {
+                font-size: 1rem;
+            }
+
+            .servico-desc {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .servicos-hero {
+                padding: 2rem 15px;
+            }
+
+            .servicos-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .servicos-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <section class="cta">
-        <nav class="container">
-            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">CelularTech</a>
             <div class="nav-links">
                 <a href="index.html">Início</a>
                 <a href="servicos.html">Serviços</a>
                 <a href="pages/login.html">Entrar</a>
                 <a href="pages/cadastro.html" class="btn-primary">Cadastrar</a>
             </div>
-        </nav>
+        </div>
+    </nav>
+
+    <section class="servicos-hero">
+        <h1>🛠️ Nossos Serviços</h1>
+        <p>Encontre os melhores técnicos especializados em cada tipo de reparo. Qualidade garantida!</p>
     </section>
 
-    <div class="container servicos-container">
-        <h1 style="text-align: center; margin-bottom: 2rem;">Escolha um Serviço</h1>
-        
-        <div class="servicos-buttons">
-            <a href="servico-detalhes.html?servico=Troca de Tela" class="servico-btn">Troca de Tela</a>
-            <a href="servico-detalhes.html?servico=Troca de Bateria" class="servico-btn">Troca de Bateria</a>
-            <a href="servico-detalhes.html?servico=Conector de Carga" class="servico-btn">Conector de Carga</a>
-            <a href="servico-detalhes.html?servico=Reparo de Placa" class="servico-btn">Reparo de Placa</a>
-            <a href="servico-detalhes.html?servico=Câmera" class="servico-btn">Câmera</a>
-            <a href="servico-detalhes.html?servico=Alto-falante" class="servico-btn">Alto-falante</a>
-            <a href="servico-detalhes.html?servico=Software" class="servico-btn">Software</a>
-            <a href="servico-detalhes.html?servico=Placa Mãe" class="servico-btn">Placa Mãe</a>
+    <div class="servicos-container">
+        <div class="servicos-grid">
+            <a href="servico-detalhes.html?servico=Troca de Tela" class="servico-card">
+                <div class="servico-icon">📱</div>
+                <h3 class="servico-title">Troca de Tela</h3>
+                <p class="servico-desc">Tela quebrada? Nós trocamos com rapidez e qualidade</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Troca de Bateria" class="servico-card">
+                <div class="servico-icon">🔋</div>
+                <h3 class="servico-title">Troca de Bateria</h3>
+                <p class="servico-desc">Bateria descarregando? Deixamos seu celular como novo</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Conector de Carga" class="servico-card">
+                <div class="servico-icon">🔌</div>
+                <h3 class="servico-title">Conector de Carga</h3>
+                <p class="servico-desc">Não carrega? Consertamos o conector em minutos</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Reparo de Placa" class="servico-card">
+                <div class="servico-icon">🔧</div>
+                <h3 class="servico-title">Reparo de Placa</h3>
+                <p class="servico-desc">Problemas na placa lógica? Restauramos seu celular</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Câmera" class="servico-card">
+                <div class="servico-icon">📸</div>
+                <h3 class="servico-title">Câmera</h3>
+                <p class="servico-desc">Câmera com defeito? Trocamos com a melhor qualidade</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Alto-falante" class="servico-card">
+                <div class="servico-icon">🔊</div>
+                <h3 class="servico-title">Alto-falante</h3>
+                <p class="servico-desc">Som ruim? Trocamos o alto-falante do seu celular</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Software" class="servico-card">
+                <div class="servico-icon">💻</div>
+                <h3 class="servico-title">Software</h3>
+                <p class="servico-desc">Lentidão ou trava? Otimizamos o sistema</p>
+            </a>
+
+            <a href="servico-detalhes.html?servico=Placa Mãe" class="servico-card">
+                <div class="servico-icon">⚙️</div>
+                <h3 class="servico-title">Placa Mãe</h3>
+                <p class="servico-desc">Placa queimada? Reparamos ou substituímos</p>
+            </a>
         </div>
     </div>
 
+    <script src="js/auth.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script src="js/ui-components.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

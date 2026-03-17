@@ -6,19 +6,457 @@
     <title>CelularTech - Encontre Técnicos de Celular</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .feature-card {
-            cursor: pointer;
-            transition: transform 0.3s;
+        /* Navegação */
+        nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #3B82F6;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6B7280;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3B82F6;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6, #2563EB) !important;
+            color: white !important;
+            padding: 0.8rem 1.6rem;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1E40AF 100%);
+            color: white;
+            padding: 6rem 20px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .search-container input,
+        .search-container button {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .search-container input {
+            flex: 1;
+            background: #F3F4F6;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            background: white;
+        }
+
+        .search-container button {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .search-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 5rem 20px;
+            background: #F9FAFB;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #6B7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3B82F6, #2563EB);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #1F2937;
+        }
+
+        .feature-card p {
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 5rem 20px;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid #E5E7EB;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1F2937;
+        }
+
+        .service-card p {
+            color: #6B7280;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            color: white;
+            padding: 5rem 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-secondary {
+            background: white !important;
+            color: #3B82F6 !important;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-container input {
+                width: 100%;
+            }
+
+            .search-container button {
+                width: 100%;
+            }
+
+            nav .container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .features-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <section class="cta">
-        <nav class="container">
-            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">CelularTech</a>
             <div class="nav-links">
                 <a href="index.html">Início</a>
                 <a href="servicos.html">Serviços</a>
@@ -26,93 +464,88 @@
                 <a href="pages/login.html">Entrar</a>
                 <a href="pages/cadastro.html" class="btn-primary">Cadastrar</a>
             </div>
-        </nav>
-        <div class="container" style="padding-bottom: 1rem;">
-            <div class="search-box">
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>🛠️ Encontre o Melhor Técnico para seu Celular</h1>
+            <p>CelularTech não tem erro, é só contratar e ser feliz!</p>
+            <div class="search-container">
                 <input type="text" id="searchCity" placeholder="Qual é sua cidade?" onkeypress="if(event.key==='Enter') buscarTecnicos()">
-                <input type="text" id="searchService" placeholder="Qual o problema? (ex: tela quebrada)" onkeypress="if(event.key==='Enter') buscarTecnicos()">
+                <input type="text" id="searchService" placeholder="Qual o problema?" onkeypress="if(event.key==='Enter') buscarTecnicos()">
                 <button onclick="buscarTecnicos()">🔍 Buscar</button>
             </div>
         </div>
     </section>
 
-    <section class="hero">
-        <div class="container" style="position: relative; z-index: 1;">
-            <h1 style="font-size: 2rem;">Encontre o Melhor Técnico para seu Celular</h1>
-            <p style="font-size: 1rem;">CelularTech não tem erro, é só contratar e ser feliz</p>
+    <section class="features-section">
+        <div class="section-title">
+            <h2>Por que escolher CelularTech?</h2>
+            <p>A melhor plataforma para encontrar técnicos qualificados</p>
         </div>
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1200') center/cover; opacity: 0.15; z-index: 0;"></div>
-    </section>
-
-    <section class="features">
-        <div class="container" style="position: relative; z-index: 1;">
-            <h2>Aqui na CelularTech temos os melhores técnicos</h2>
-            <div class="features-grid">
-                <a href="tecnico-ideal.html" style="text-decoration: none; color: inherit;">
-                    <div class="feature-card">
-                        <div class="icon"><img src="https://cdn-icons-png.flaticon.com/512/644/644458.png" alt="Celular" style="width: 60px; height: 60px;"></div>
-                        <h3>Técnicos Especializados</h3>
-                        <p>Profissionais qualificados e experientes</p>
-                    </div>
-                </a>
-                <div class="feature-card">
-                    <div class="icon">⭐⭐⭐⭐⭐</div>
-                    <h3>Avaliações Reais</h3>
-                    <p>Sistema transparente de avaliações</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🛡️</div>
-                    <h3>Segurança pro seu Celular</h3>
-                    <p>Plataforma segura e confiável</p>
-                </div>
+        <div class="features-grid">
+            <a href="tecnico-ideal.html" class="feature-card">
+                <div class="icon">👨‍🔧</div>
+                <h3>Técnicos Especializados</h3>
+                <p>Profissionais qualificados e experientes em todos os tipos de reparo</p>
+            </a>
+            <div class="feature-card">
+                <div class="icon">⭐</div>
+                <h3>Avaliações Reais</h3>
+                <p>Sistema transparente de avaliações de clientes reais</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🛡️</div>
+                <h3>Segurança Garantida</h3>
+                <p>Plataforma segura e confiável para você e seu celular</p>
             </div>
         </div>
     </section>
 
-    <section class="services">
-        <div class="container" style="position: relative; z-index: 1;">
+    <section class="services-section">
+        <div class="section-title">
             <h2>Serviços Populares</h2>
-            <div class="services-grid">
-                <a href="servico-detalhes.html?servico=Troca de Tela" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="service-icon">📱</div>
-                    <h3>Troca de Tela</h3>
-                    <p>Troca de tela com garantia</p>
-                </a>
-                <a href="servico-detalhes.html?servico=Troca de Bateria" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="service-icon">🔋</div>
-                    <h3>Troca de Bateria</h3>
-                    <p>Troca de bateria e diagnóstico</p>
-                </a>
-                <a href="servico-detalhes.html?servico=Conector de Carga" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="service-icon">🔌</div>
-                    <h3>Conector de Carga</h3>
-                    <p>Reparo ou troca de carregador</p>
-                </a>
-                <a href="servico-detalhes.html?servico=Reparo de Placa" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="service-icon">⚙️</div>
-                    <h3>Reparo de Placa</h3>
-                    <p>Reparo de placa-mãe</p>
-                </a>
-                <a href="servico-detalhes.html?servico=Câmera" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="service-icon">📷</div>
-                    <h3>Câmera</h3>
-                    <p>Reparo de câmera frontal/traseira</p>
-                </a>
-                <a href="servico-detalhes.html?servico=Alto-falante" class="service-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <div class="service-icon">🔊</div>
-                    <h3>Alto-falante</h3>
-                    <p>Reparo de áudio e microfone</p>
-                </a>
-            </div>
+            <p>Encontre técnicos especializados em cada tipo de reparo</p>
+        </div>
+        <div class="services-grid">
+            <a href="servico-detalhes.html?servico=Troca de Tela" class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Troca de Tela</h3>
+                <p>Tela com defeito? Trocamos com qualidade</p>
+            </a>
+            <a href="servico-detalhes.html?servico=Troca de Bateria" class="service-card">
+                <div class="service-icon">🔋</div>
+                <h3>Troca de Bateria</h3>
+                <p>Bateria fraca? Deixamos como novo</p>
+            </a>
+            <a href="servico-detalhes.html?servico=Conector de Carga" class="service-card">
+                <div class="service-icon">🔌</div>
+                <h3>Conector de Carga</h3>
+                <p>Não carrega? Consertamos rápido</p>
+            </a>
+            <a href="servico-detalhes.html?servico=Reparo de Placa" class="service-card">
+                <div class="service-icon">⚙️</div>
+                <h3>Reparo de Placa</h3>
+                <p>Placa com problema? Reparamos</p>
+            </a>
+            <a href="servico-detalhes.html?servico=Câmera" class="service-card">
+                <div class="service-icon">📸</div>
+                <h3>Câmera</h3>
+                <p>Câmera com defeito? Trocamos</p>
+            </a>
+            <a href="servico-detalhes.html?servico=Alto-falante" class="service-card">
+                <div class="service-icon">🔊</div>
+                <h3>Alto-falante</h3>
+                <p>Sem som? Consertamos o áudio</p>
+            </a>
         </div>
     </section>
 
-    <section class="cta-tech">
-        <div class="container">
-            <h2>Você é um técnico?</h2>
-            <p>Cadastre-se e comece a receber solicitações hoje mesmo!</p>
-            <a href="pages/cadastro.html" class="btn-secondary">Cadastrar como Técnico</a>
-        </div>
+    <section class="cta-section">
+        <h2>Você é um Técnico?</h2>
+        <p>Cadastre-se na CelularTech e comece a receber solicitações de clientes hoje mesmo!</p>
+        <a href="pages/cadastro.html" class="btn-secondary">Cadastrar como Técnico</a>
     </section>
 
     <script src="js/auth.js"></script>
