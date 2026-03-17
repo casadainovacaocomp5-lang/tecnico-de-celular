@@ -1,0 +1,7 @@
+# Netlify Redirects - SPA Router
+# Redireciona todas as rotas para index.html
+/* /index.html 200
+
+# Cache busting - arquivos com hash podem ser cacheados agressivamente
+# /_nuxt/* /404 404
+# Isso não é necessário para projeto vanilla

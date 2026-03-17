@@ -1,29 +1,44 @@
 [build]
-  base = "frontend"
-  command = "npm run build"
-  publish = ".next/standalone"
-  functions = "netlify/functions"
+  # Para servir arquivos estáticos - sem build necessário!
+  base = "site"
+  command = "echo 'No build needed for static site'"
+  publish = "."
 
 [[redirects]]
+  # SPA fallback - redireciona URLs não encontradas para index.html
   from = "/*"
   to = "/index.html"
   status = 200
 
 [[headers]]
+  # Headers de cache para arquivos estáticos
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=3600"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer-when-downgrade"
 
 [[headers]]
-  for = "/_next/static/*"
+  # Cache agressivo para arquivos com hash/versão
+  for = "/*.{js,css}"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+[[headers]]
+  # Sem cache para HTML (sempre busca versão nova)
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Configurações para diferentes contextos de deploy
 [context.production]
-  command = "npm run build"
+  # Sem comando build - apenas serve arquivos estáticos
+  command = "echo 'Production deployment'"
 
 [context.deploy-preview]
-  command = "npm run build"
+  command = "echo 'Deploy preview'"
 
 [context.branch-deploy]
-  command = "npm run build"
+  command = "echo 'Branch deployment'"

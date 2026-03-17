@@ -1,0 +1,108 @@
+# 🎯 QUICK REFERENCE - Deploy no Netlify
+
+**TL;DR** (Too Long; Didn't Read) - Versão resumida em 1 minuto!
+
+---
+
+## ⚡ 3 Formas Rápidas
+
+### 1️⃣ MAIS RÁPIDO - Drag & Drop (2 min)
+
+```
+1. Abra: https://app.netlify.com
+2. Clique: "Deploy manually"
+3. ARRASTE: pasta site/
+4. PRONTO! 🎉
+```
+
+---
+
+### 2️⃣ MELHOR - GitHub Auto-Deploy (5 min)
+
+```bash
+# CD para projeto
+cd "c:\tecnico de celular"
+
+# Inicializar Git
+git init
+git add .
+git commit -m "Deploy ready"
+
+# Fazer push
+git remote add origin https://github.com/seu-user/seu-repo
+git push -u origin main
+```
+
+Depois:
+```
+1. https://app.netlify.com
+2. "New site from Git"
+3. Seleciona repo GitHub
+4. PRONTO! Deploy automático! 🎉
+```
+
+---
+
+### 3️⃣ PRO - CLI (3 min)
+
+```bash
+npm install -g netlify-cli
+netlify login
+cd site
+netlify deploy --prod
+```
+
+---
+
+## 🔗 URLs Importantes
+
+```
+Netlify Dashboard: https://app.netlify.com
+Seu Site: https://seu-site.netlify.app
+GitHub: https://github.com/novo-repo
+```
+
+---
+
+## ✅ Checklista de 30 segundos
+
+- [ ] netlify.toml existe
+- [ ] site/_redirects existe  
+- [ ] site/js/ tem 4 arquivos
+- [ ] site/index.html tem scripts
+- [ ] Teste local: abra site/index.html
+- [ ] F12 Console: sem erros
+
+---
+
+## 🚨 Se der erro...
+
+| Erro | Solução |
+|------|---------|
+| "CSS não carrega" | Limpar cache: Ctrl+Shift+R |
+| "JavaScript erro" | F12 → Console, ler erro |
+| "Site não abre" | Verificar netlify.toml |
+| "Deploy falha" | Site/_redirects existe? |
+
+---
+
+## 📊 Status
+
+```
+✅ Código: Pronto
+✅ Configuração: Pronta
+✅ Arquivos: Prontos
+✅ Deploy: 2 CLIQUES!
+```
+
+---
+
+## 🎊 Próximo Passo
+
+👉 **Abra: https://app.netlify.com**
+
+E escolha seu método de deploy! (sugerimos: Drag & Drop para começar)
+
+---
+
+**Desenvolvido com ❤️** - Seu site estará online em minutos! 🚀
