@@ -5,241 +5,179 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Técnicos - CelularTech</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .filters-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .technicians-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .technicians-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <section class="cta">
+    <header>
         <nav class="container">
-            <h1 class="logo" style="text-align: center; font-size: 2.5rem;">CelularTech</h1>
-            <div class="nav-links">
-                <a href="../index.html">Início</a>
-                <a href="tecnicos.html">Técnicos</a>
-                <a href="login.html">Entrar</a>
-                <a href="cadastro.html" class="btn-primary">Cadastrar</a>
-            </div>
+            <a href="../index.html" class="logo">🔧 CelularTech</a>
+            <div class="nav-links"></div>
         </nav>
-    </section>
+    </header>
 
-    <div class="container" style="padding: 2rem 0;">
-        <h1>Encontre seu Técnico Ideal</h1>
-        <p style="text-align: center; color: #666; margin-bottom: 1rem;">Exemplos de serviços: Troca de Tela, Troca de Bateria, Conector de Carga, Câmera, Reparo de Placa, Software</p>
+    <main style="padding: 2rem 0; min-height: calc(100vh - 80px);">
+        <div class="container">
+            <h1 style="margin-bottom: 2rem;">Encontre Técnicos Especializados</h1>
 
-        <div class="filters">
-            <div class="filter-grid">
-                <input type="text" id="filtroCidade" placeholder="Cidade" onkeyup="filtrarTecnicos()">
-                <input type="text" id="filtroServico" placeholder="Serviço" onkeyup="filtrarTecnicos()">
-                <select id="filtroAvaliacao" onchange="filtrarTecnicos()">
-                    <option value="">Avaliação mínima</option>
-                    <option value="4">4+ estrelas</option>
-                    <option value="3">3+ estrelas</option>
-                </select>
-                <select id="ordenar" onchange="filtrarTecnicos()">
-                    <option value="">Ordenar por</option>
-                    <option value="avaliacao">Melhor avaliação</option>
-                    <option value="preco-asc">Menor preço</option>
-                    <option value="preco-desc">Maior preço</option>
-                </select>
-            </div>
-        </div>
-
-        <div id="listaTecnicos" class="tech-grid"></div>
-    </div>
-
-    <script src="../js/app.js"></script>
-    <script>
-        const tecnicos = [
-            {
-                id: 1,
-                nome: "Carlos Silva",
-                cidade: "São Paulo",
-                especialidades: ["Troca de Tela", "Troca de Bateria", "Reparo de Placa"],
-                preco: 150,
-                avaliacao: 4.8,
-                servicos: 245,
-                telefone: "(11) 98765-4321"
-            },
-            {
-                id: 2,
-                nome: "Ana Santos",
-                cidade: "Rio de Janeiro",
-                especialidades: ["Troca de Tela", "Conector de Carga", "Câmera"],
-                preco: 130,
-                avaliacao: 4.9,
-                servicos: 189,
-                telefone: "(21) 97654-3210"
-            },
-            {
-                id: 3,
-                nome: "Pedro Costa",
-                cidade: "São Paulo",
-                especialidades: ["Troca de Tela", "Troca de Bateria", "Software"],
-                preco: 140,
-                avaliacao: 4.7,
-                servicos: 312,
-                telefone: "(11) 96543-2109"
-            },
-            {
-                id: 4,
-                nome: "Maria Oliveira",
-                cidade: "Belo Horizonte",
-                especialidades: ["Troca de Tela", "Bateria", "Placa Mãe"],
-                preco: 120,
-                avaliacao: 4.6,
-                servicos: 156,
-                telefone: "(31) 95432-1098"
-            },
-            {
-                id: 5,
-                nome: "João Ferreira",
-                cidade: "Brasília",
-                especialidades: ["Troca de Tela", "Câmera", "Alto-falante"],
-                preco: 135,
-                avaliacao: 4.8,
-                servicos: 198,
-                telefone: "(61) 94321-0987"
-            },
-            {
-                id: 6,
-                nome: "Juliana Lima",
-                cidade: "Curitiba",
-                especialidades: ["Troca de Tela", "Bateria", "Conector de Carga"],
-                preco: 125,
-                avaliacao: 4.9,
-                servicos: 223,
-                telefone: "(41) 93210-9876"
-            },
-            {
-                id: 7,
-                nome: "Roberto Alves",
-                cidade: "Salvador",
-                especialidades: ["Troca de Tela", "Reparo de Placa", "Software"],
-                preco: 145,
-                avaliacao: 4.7,
-                servicos: 167,
-                telefone: "(71) 92109-8765"
-            },
-            {
-                id: 8,
-                nome: "Fernanda Souza",
-                cidade: "Fortaleza",
-                especialidades: ["Troca de Tela", "Bateria", "Câmera"],
-                preco: 130,
-                avaliacao: 4.8,
-                servicos: 201,
-                telefone: "(85) 91098-7654"
-            },
-            {
-                id: 9,
-                nome: "Lucas Martins",
-                cidade: "Brasília",
-                especialidades: ["Alto-falante", "Conector de Carga", "Câmera"],
-                preco: 125,
-                avaliacao: 4.6,
-                servicos: 134,
-                telefone: "(61) 98765-4321"
-            },
-            {
-                id: 10,
-                nome: "Beatriz Costa",
-                cidade: "São Paulo",
-                especialidades: ["Troca de Bateria", "Reparo de Placa", "Software"],
-                preco: 160,
-                avaliacao: 4.9,
-                servicos: 289,
-                telefone: "(11) 97654-3210"
-            },
-            {
-                id: 11,
-                nome: "Felipe Santos",
-                cidade: "Rio de Janeiro",
-                especialidades: ["Conector de Carga", "Alto-falante", "Câmera"],
-                preco: 135,
-                avaliacao: 4.7,
-                servicos: 156,
-                telefone: "(21) 96543-2109"
-            },
-            {
-                id: 12,
-                nome: "Camila Rocha",
-                cidade: "Belo Horizonte",
-                especialidades: ["Troca de Tela", "Bateria", "Software"],
-                preco: 140,
-                avaliacao: 4.8,
-                servicos: 267,
-                telefone: "(31) 95432-1098"
-            }
-        ];
-
-        function renderizarTecnicos(lista) {
-            const container = document.getElementById('listaTecnicos');
-            
-            if (lista.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #666;">Nenhum técnico encontrado</p>';
-                return;
-            }
-            
-            container.innerHTML = lista.map(tec => `
-                <div class="tech-card">
-                    <div class="tech-header">
-                        <div class="tech-avatar">👤</div>
-                        <div class="tech-info">
-                            <h3>${tec.nome}</h3>
-                            <div class="tech-location">📍 ${tec.cidade}</div>
-                            <div class="tech-rating">
-                                <span class="stars">⭐</span>
-                                <strong>${tec.avaliacao}</strong>
-                                <span style="color: #666;">(${tec.servicos} serviços)</span>
-                            </div>
-                        </div>
+            <!-- Filtros -->
+            <div class="filters-section">
+                <h2 style="margin-bottom: 1rem;">Filtrar por:</h2>
+                <div class="filters-grid">
+                    <div class="form-group">
+                        <label for="filterCity">Cidade</label>
+                        <select id="filterCity" class="form-input">
+                            <option value="">Todas as cidades</option>
+                        </select>
                     </div>
-                    <div class="specialties">
-                        ${tec.especialidades.slice(0, 3).map(esp => 
-                            `<span class="specialty-tag">${esp}</span>`
-                        ).join('')}
+
+                    <div class="form-group">
+                        <label for="filterService">Serviço</label>
+                        <select id="filterService" class="form-input">
+                            <option value="">Todos os serviços</option>
+                        </select>
                     </div>
-                    <div class="tech-footer">
-                        <span class="price">R$ ${tec.preco}</span>
-                        <a href="tecnico-perfil.html?id=${tec.id}" class="btn-primary">Ver Perfil</a>
+
+                    <div class="form-group">
+                        <label for="filterRating">Avaliação Mínima</label>
+                        <select id="filterRating" class="form-input">
+                            <option value="">Qualquer avaliação</option>
+                            <option value="3">3 ⭐ ou mais</option>
+                            <option value="4">4 ⭐ ou mais</option>
+                            <option value="4.5">4.5 ⭐ ou mais</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filterPrice">Preço Máximo</label>
+                        <input type="number" id="filterPrice" class="form-input" placeholder="R$ 500">
+                    </div>
+
+                    <div style="display: flex; align-items: flex-end; gap: 0.5rem;">
+                        <button id="applyFilters" class="btn-primary" style="flex: 1;">🔍 Filtrar</button>
+                        <button id="clearFilters" class="btn-secondary">Limpar</button>
                     </div>
                 </div>
-            `).join('');
+            </div>
+
+            <!-- Técnicos -->
+            <div id="techniciansContainer" class="technicians-grid"></div>
+        </div>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/data-manager.js"></script>
+    <script src="../js/ui-components.js"></script>
+    <script src="../js/app.js"></script>
+
+    <script>
+        // Inicializar página
+        function initPage() {
+            loadCities();
+            loadServices();
+            applyFilters();
+            updateHeader();
         }
 
-        function filtrarTecnicos() {
-            const cidade = document.getElementById('filtroCidade').value.toLowerCase();
-            const servico = document.getElementById('filtroServico').value.toLowerCase();
-            const avaliacao = document.getElementById('filtroAvaliacao').value;
-            const ordenar = document.getElementById('ordenar').value;
+        // Carregar cidades no select
+        function loadCities() {
+            const select = document.getElementById('filterCity');
+            const cities = dataManager.getUniqueCities();
             
-            let filtrados = tecnicos.filter(tec => {
-                const matchCidade = !cidade || tec.cidade.toLowerCase().includes(cidade);
-                const matchServico = !servico || tec.especialidades.some(e => e.toLowerCase().includes(servico));
-                const matchAvaliacao = !avaliacao || tec.avaliacao >= parseFloat(avaliacao);
-                return matchCidade && matchServico && matchAvaliacao;
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                select.appendChild(option);
             });
-            
-            if (ordenar === 'avaliacao') {
-                filtrados.sort((a, b) => b.avaliacao - a.avaliacao);
-            } else if (ordenar === 'preco-asc') {
-                filtrados.sort((a, b) => a.preco - b.preco);
-            } else if (ordenar === 'preco-desc') {
-                filtrados.sort((a, b) => b.preco - a.preco);
+
+            // Verificar se veio de search
+            const cityParam = Router.getQueryParam('cidade');
+            if (cityParam) {
+                select.value = cityParam;
             }
-            
-            renderizarTecnicos(filtrados);
         }
 
-        const params = new URLSearchParams(window.location.search);
-        const cidadeParam = params.get('cidade');
-        const servicoParam = params.get('servico');
-        
-        if (cidadeParam) {
-            document.getElementById('filtroCidade').value = cidadeParam;
+        // Carregar serviços no select
+        function loadServices() {
+            const select = document.getElementById('filterService');
+            const allServices = new Set();
+            
+            dataManager.technicians.forEach(tech => {
+                tech.specialties.forEach(spec => allServices.add(spec));
+            });
+
+            allServices.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service;
+                option.textContent = service;
+                select.appendChild(option);
+            });
+
+            // Verificar se veio de search
+            const serviceParam = Router.getQueryParam('servico');
+            if (serviceParam) {
+                select.value = serviceParam;
+            }
         }
-        if (servicoParam) {
-            document.getElementById('filtroServico').value = servicoParam;
+
+        // Aplicar filtros
+        function applyFilters() {
+            const filters = {
+                city: document.getElementById('filterCity').value,
+                service: document.getElementById('filterService').value,
+                minRating: parseFloat(document.getElementById('filterRating').value) || 0,
+                maxPrice: parseFloat(document.getElementById('filterPrice').value) || Infinity
+            };
+
+            const results = dataManager.searchTechnicians(filters);
+            loadTechnicians('#techniciansContainer', results);
         }
-        
-        filtrarTecnicos();
+
+        // Limpar filtros
+        function clearFilters() {
+            document.getElementById('filterCity').value = '';
+            document.getElementById('filterService').value = '';
+            document.getElementById('filterRating').value = '';
+            document.getElementById('filterPrice').value = '';
+            applyFilters();
+        }
+
+        // Event listeners
+        document.getElementById('applyFilters').addEventListener('click', applyFilters);
+        document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
 </html>
